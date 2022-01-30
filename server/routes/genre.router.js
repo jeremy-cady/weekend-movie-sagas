@@ -6,17 +6,22 @@ router.get('/', (req, res) => {
   // Add query to get all genres
   const queryText = `
     SELECT
-	    "movies".title AS movie,
-	    ARRAY_AGG(TO_JSON(genres)) AS genres
+	    "movies"."title" AS movie,
+	    ARRAY_AGG("genres"."name") AS genres
     FROM "movies"
     JOIN "movies_genres"
-	    ON "movies".id = "movies_genres".movie_id
+	    ON "movies"."id" = "movies_genres"."movie_id"
     JOIN "genres"
-	    ON "genres".id = "movies_genres".genre_id
-    GROUP BY "movies".id;
+	    ON "genres"."id" = "movies_genres"."genre_id"
+    WHERE "movies"."id" = $1
+    GROUP BY "movies"."title";
   `;
 
-  pool.query(queryText)
+  const queryParams = [
+    req.query.movieID
+  ];
+
+  pool.query(queryText, queryParams)
     .then(result => {
       res.send(result.rows);
     })

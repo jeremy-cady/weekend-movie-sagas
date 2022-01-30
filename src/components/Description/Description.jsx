@@ -11,13 +11,12 @@ function Description() {
 
 
     useEffect(() => {
-        dispatch({ type: 'FETCH_GENRES' });
+        dispatch({ type: 'FETCH_GENRES', payload: selectedMovie.id });
     }, []);
 
 
     console.log('selected movie is:', selectedMovie);
     console.log('genres are:', genres);
-    console.log();
 
 
     return(
@@ -26,7 +25,8 @@ function Description() {
             <h1>{selectedMovie.title}</h1>
             <img src={selectedMovie.poster}/>
             <h3>{selectedMovie.description}</h3>
-            <h3>{genres.genres}</h3>
+            <h3 className="genres">{genres.genres}</h3>
+    
         </>
     );
 }
