@@ -8,12 +8,10 @@ function MovieList() {
     const dispatch = useDispatch();
     const history = useHistory();
     const movies = useSelector(store => store.movies);
-    const genres = useSelector(store => store.genres);
 
 
     useEffect(() => {
         dispatch({ type: 'FETCH_MOVIES' });
-        dispatch({ type: 'FETCH_GENRES' });
     }, []);
 
 
@@ -23,10 +21,6 @@ function MovieList() {
         dispatch({
             type: 'SET_SELECTED_MOVIE',
             payload: movie
-        })
-        dispatch({
-            type: 'SET_GENRES',
-            payload: genres
         })
         history.push(`/description`);
     }

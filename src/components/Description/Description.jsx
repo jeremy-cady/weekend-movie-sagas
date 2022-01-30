@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 
@@ -8,8 +9,15 @@ function Description() {
     const selectedMovie = useSelector(store => store.setSelectedMovie);
     const genres = useSelector(store => store.genres);
 
+
+    useEffect(() => {
+        dispatch({ type: 'FETCH_GENRES' });
+    }, []);
+
+
     console.log('selected movie is:', selectedMovie);
     console.log('genres are:', genres);
+    console.log();
 
 
     return(
@@ -18,7 +26,7 @@ function Description() {
             <h1>{selectedMovie.title}</h1>
             <img src={selectedMovie.poster}/>
             <h3>{selectedMovie.description}</h3>
-            <h3>{genres}</h3>
+            <h3>{genres.genres}</h3>
         </>
     );
 }
